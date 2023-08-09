@@ -1,6 +1,6 @@
 # FirstWebScarping
-Webscrapping morele.net online shop to get all graphic card offers.
+Webscrapping microproject using Python, BeautifulSoup package.
 
-Using Python, BeautifulSoup package.
+Webscrapping morele.net online shop to get all graphic card offers.
 
 Saving files to JSON
