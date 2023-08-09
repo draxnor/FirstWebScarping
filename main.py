@@ -1,9 +1,7 @@
-import sys
-
-from bs4 import BeautifulSoup
-import requests
 from pprint import pprint
-import re
+import requests
+from bs4 import BeautifulSoup
+import pickle
 
 
 def parse_graphic_card_name(item_section):
@@ -11,8 +9,8 @@ def parse_graphic_card_name(item_section):
     desc_without_prefix = item_description.lstrip('Karta graficzna ')
     bracket_opening_idx = desc_without_prefix.find("(")
     bracket_enclosing_idx = desc_without_prefix.find(")")
-    full_model_name = desc_without_prefix[:bracket_opening_idx]
-    model_id = desc_without_prefix[bracket_opening_idx+1: bracket_enclosing_idx]
+    full_model_name = desc_without_prefix[:bracket_opening_idx].rstrip()
+    model_id = desc_without_prefix[bracket_opening_idx+1: bracket_enclosing_idx].strip()
     return full_model_name, model_id
 
 
@@ -57,8 +55,12 @@ def main():
         doc = BeautifulSoup(result.text, 'html.parser')
         card_list = get_card_product_list(doc)
         full_product_list.extend(card_list)
-    pprint(full_product_list)
+    with open('product_list.pkl', 'wb') as fp:
+        pickle.dump(full_product_list, fp)
+        print('File saved successfully.')
+    # pprint(full_product_list)
 
 
 if __name__ == '__main__':
     main()
+
