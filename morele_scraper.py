@@ -1,4 +1,3 @@
-from pprint import pprint
 import requests
 from bs4 import BeautifulSoup
 import pickle
@@ -23,6 +22,7 @@ def get_chipset_type(item_section):
             break
     return chipset_type
 
+
 def get_card_product_list(bs_single_page):
     graphic_card_sections = bs_single_page.find_all(['div'], class_='card')
 
@@ -39,14 +39,14 @@ def get_card_product_list(bs_single_page):
             'name': model_name,
             'id': model_id,
             'brand': brand,
-            'price': price,
+            'price': float(price),
             'chipset': chipset_type
         }
         product_list.append(product_info)
     return product_list
 
 
-def main():
+def scrap_morele():
     url_base = 'https://www.morele.net/kategoria/karty-graficzne-12/,,,,,,,,0,,,,/'
     full_product_list = []
     for page_index in range(1, 25):
@@ -58,9 +58,8 @@ def main():
     with open('product_list.pkl', 'wb') as fp:
         pickle.dump(full_product_list, fp)
         print('File saved successfully.')
-    # pprint(full_product_list)
 
 
 if __name__ == '__main__':
-    main()
+    scrap_morele()
 
