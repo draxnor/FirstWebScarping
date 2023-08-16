@@ -49,13 +49,7 @@ if __name__ == '__main__':
             is_last_page = True
             print('Finished!')
 
-    with open('morele_products_links.txt', 'w') as f:
-        f.write('\n'.join(products_urls))
-    with open('morele_products_links.pkl', 'wb') as f:
-        pickle.dump(products_urls, f)
-
-
-    # with open('soup', 'wb') as file:
-    #     pickle.dump(soup_doc, file)
-    # with open('soup', 'rb') as file:
-    #     soup_doc = pickle.load(file)
+    # with open('morele_products_links.txt', 'w') as f:
+    #     f.write('\n'.join(products_urls))
+    # with open('morele_products_links.pkl', 'wb') as f:
+    #     pickle.dump(products_urls, f)
