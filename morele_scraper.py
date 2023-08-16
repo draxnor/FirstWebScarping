@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pickle
-
+from graphic_card import GraphicCard
 
 def parse_graphic_card_name(item_section):
     item_description = item_section['data-product-name']
@@ -30,19 +30,12 @@ def get_card_product_list(bs_single_page):
     for item_section in graphic_card_sections:
         if 'data-product-name' not in item_section.attrs:
             continue
-
         chipset_type = get_chipset_type(item_section)
         model_name, model_id = parse_graphic_card_name(item_section)
         brand = item_section.get('data-product-brand')
-        price = item_section.get('data-product-price')
-        product_info = {
-            'name': model_name,
-            'id': model_id,
-            'brand': brand,
-            'price': float(price),
-            'chipset': chipset_type
-        }
-        product_list.append(product_info)
+        price = float(item_section.get('data-product-price'))
+        card = GraphicCard(model_name, model_id, brand, price, chipset_type)
+        product_list.append(card)
     return product_list
 
 

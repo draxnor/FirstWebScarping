@@ -6,8 +6,7 @@ if __name__ == '__main__':
     with open('product_list.pkl', 'rb') as fp:
         product_list = pickle.load(fp)
 
-    product_list.sort(key=lambda el: el['price'])
-    products = pd.DataFrame(product_list)
+    products = pd.DataFrame(product.__dict__ for product in product_list)
 
     # Group by chipsets and show minimum and median of a price
     rxs_and_rtxs = products[products['chipset'].str.contains('Radeon RX|GeForce RTX')]
