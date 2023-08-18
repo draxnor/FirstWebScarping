@@ -1,7 +1,7 @@
 import sys
 
 from bs4 import BeautifulSoup
-from moreleScrapper import get_html_content, parse_html
+from MoreleScrapper import get_html_content, parse_html
 import pickle
 from pprint import pprint
 from datetime import datetime
@@ -37,7 +37,7 @@ def get_product_price(page_soup):
     product_price_str = None
     if price_soup:
         product_price_str = price_soup.get('data-price', None)
-    product_price = float('nan') if product_price_str is None else float(product_price_str)
+    product_price = float(product_price_str) if product_price_str is not None else None
     return product_price
 
 
