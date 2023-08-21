@@ -14,10 +14,10 @@ class MySqlPipeline:
         if self.connection.is_connected():
             logging.info('MySQL database connection successfully established.')
 
+        self.cursor = self.connection.cursor()
         self._database_tables_init()
 
     def _database_tables_init(self):
-        cursor = self.connection.cursor()
         create_shop_query = """
                         CREATE TABLE IF NOT EXISTS Shop (
                         Shop_ID INT AUTO_INCREMENT,
@@ -54,11 +54,10 @@ class MySqlPipeline:
                                 FOREIGN KEY (Card_ID) REFERENCES GraphicCard(Card_ID)
                             );
                             """
-        cursor.execute(create_shop_query)
-        cursor.execute(create_graphiccard_query)
-        cursor.execute(create_offer_query)
+        self.cursor.execute(create_shop_query)
+        self.cursor.execute(create_graphiccard_query)
+        self.cursor.execute(create_offer_query)
         self.connection.commit()
-        cursor.close()
 
     def close_connection(self):
         if self.connection.is_connected():
@@ -77,10 +76,10 @@ class MySqlPipeline:
                 WHERE
                     shop_name = %s
                 """
-        cursor = self.connection.cursor()
-        cursor.execute(shop_id_query, (shop_name,))
-        query_result = cursor.fetchall()
-        cursor.close()
+        # cursor = self.connection.cursor()
+        self.cursor.execute(shop_id_query, (shop_name,))
+        query_result = self.cursor.fetchall()
+        # cursor.close()
         if not query_result:
             return None
         if len(query_result) > 1:
@@ -102,11 +101,12 @@ class MySqlPipeline:
                         AND card_name = %(card_name)s)
                 """
 
-        logging.info(f"Trying to get: {asdict(gpu_offer)}")
-        cursor = self.connection.cursor()
-        cursor.execute(card_id_query, asdict(gpu_offer))
-        card_id_query_result = cursor.fetchall()
-        cursor.close()
+        logging.info(f"Trying to get ID of card with EAN: '{gpu_offer.card_ean}' "
+                     f"and producent code: '{gpu_offer.card_producent_code}'")
+        # cursor = self.connection.cursor()
+        self.cursor.execute(card_id_query, asdict(gpu_offer))
+        card_id_query_result = self.cursor.fetchall()
+        # cursor.close()
         if not card_id_query_result:
             return None
         if len(card_id_query_result) > 1:
@@ -140,11 +140,11 @@ class MySqlPipeline:
                     """
         logging.info(f"Inserting: {asdict(gpu_offer)}")
 
-        cursor = self.connection.cursor()
-        cursor.execute(gpu_data_insertion_query, asdict(gpu_offer))
-        card_id = cursor.lastrowid
+        # cursor = self.connection.cursor()
+        self.cursor.execute(gpu_data_insertion_query, asdict(gpu_offer))
+        card_id = self.cursor.lastrowid
         self.connection.commit()
-        cursor.close()
+        # cursor.close()
 
         return card_id
 
@@ -166,16 +166,16 @@ class MySqlPipeline:
                                 %(data_collection_datetime)s
                                 )
                            """
-        cursor = self.connection.cursor()
-        cursor.execute(add_price_query, {'shop_id': shop_id,
+        # cursor = self.connection.cursor()
+        self.cursor.execute(add_price_query, {'shop_id': shop_id,
                                               'card_id': card_id,
                                               'card_price': gpu_offer_details.card_price,
                                               'offer_url': gpu_offer_details.url,
                                               'data_collection_datetime': gpu_offer_details.data_collection_datetime
                                               })
-        offer_id = cursor.lastrowid
+        offer_id = self.cursor.lastrowid
         self.connection.commit()
-        cursor.close()
+        # cursor.close()
         return offer_id
 
     def insert_shop_to_db(self, shop: Shop):
@@ -190,11 +190,11 @@ class MySqlPipeline:
                             %(shop_base_url)s
                             )
                             """
-        cursor = self.connection.cursor()
-        cursor.execute(insert_shop_query, asdict(shop))
-        shop_id = cursor.lastrowid
+        # cursor = self.connection.cursor()
+        self.cursor.execute(insert_shop_query, asdict(shop))
+        shop_id = self.cursor.lastrowid
         self.connection.commit()
-        cursor.close()
+        # cursor.close()
         return shop_id
 
     def update_shop_last_update_datetime(self, shop_name, last_update_datetime: datetime.datetime):
@@ -206,11 +206,11 @@ class MySqlPipeline:
                                             WHERE
                                                 shop_name = %(shop_name)s
                                             """
-        cursor = self.connection.cursor()
-        cursor.execute(update_last_update_datetime_query, {'shop_name': shop_name,
+        # cursor = self.connection.cursor()
+        self.cursor.execute(update_last_update_datetime_query, {'shop_name': shop_name,
                                                                 'last_update_datetime': last_update_datetime})
         self.connection.commit()
-        cursor.close()
+        # cursor.close()
 
     def save_offers_to_database(self, offers: list[GraphicCardOffer], shop: Shop):
         shop_id = self.get_shop_id_by_name(shop.shop_name)
