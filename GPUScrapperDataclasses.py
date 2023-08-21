@@ -6,10 +6,10 @@ import datetime
 class Shop:
     shop_name: str
     shop_base_url: str
-    gpu_category_url: str
+    category_url: str
 
 @dataclass()
-class GraphicCard:
+class GraphicCardOffer:
     card_name: str
     card_ean: str
     card_producent_code: str
@@ -19,4 +19,5 @@ class GraphicCard:
     card_memory_in_gbs: float
     card_memory_type: str
     card_price: float
+    url: str
     data_collection_datetime: datetime.datetime
