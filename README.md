@@ -13,7 +13,7 @@ Using mysql-connector as a MySQL driver.
 
 ### Database diagram
 
-![scrapper_db_diagram](https://github.com/draxnor/MoreleNetGPUScrapper/assets/28366625/173b1e89-8b84-4c60-9c70-0947be4fb235)
+![scrapper_db_diagram](https://github.com/draxnor/MoreleNetGPUScrapper/assets/28366625/9752b4a8-9c4b-4f73-a675-37cccfc2a505)
 
 
 ## Future plans
