@@ -18,7 +18,7 @@ Using mysql-connector as a MySQL driver.
 
 ## Future plans
 
-The project started as a microproject, but it is fun and will be continued
+The project started as a microproject, but I am having fun and it will be continued
 
 I already tried scraping other shops like x-kom.pl or proline.pl, but unlike 'morele.net' those 2 are using anti-scraping techniques.
 Especially x-kom might be difficult to scrap as it recognizes GET requests typical for bot/scripts and blocks further requests from same IP address.
