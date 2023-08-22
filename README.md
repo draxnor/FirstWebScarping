@@ -1,9 +1,32 @@
 # MoreleNetGPUScrapper
-Webscrapping microproject using Python and BeautifulSoup package.
+Webscrapping GPU offers from Polish on-line shops.
+(currently only 1 - 'morele.net').
 
-## Webscrapping morele.net online shop to get all graphic card offers.
+Scrapped data is saved to MySQL database.
+Project written in Python. Scrapping using BeautifulSoup package.
 
-Find minimum prices for all graphic cards from RX (Radeon) and RTX (GeForce) lines.
-Save scrapped data to database to later analyze changes in graphics card prizes.
+## MySQL database
+Database was prepared with project development in mind, where there will be multiple scrappers for multiple online shops.
 
-![scraper_results](https://github.com/draxnor/FirstWebScarping/assets/28366625/8e58a29e-6e34-4711-b6be-2e3515d24485)
+Using mysql-connector as a MySQL driver.
+
+
+### Database diagram
+
+
+## Future plans
+
+The project started as a microproject, but it is fun and will be continued
+
+I already tried scraping other shops like x-kom.pl or proline.pl, but unlike 'morele.net' those 2 are using anti-scraping techniques.
+Especially x-kom might be difficult to scrap as it recognizes GET requests typical for bot/scripts and blocks further requests from same IP address.
+Also they use auto-generated css selectors, what makes scraping more difficult.
+
+Sounds like fun anyway, so I just need some time.
+
+Todo:
+- Scrapping multiple shops
+- Rotating proxy to avoid being blocked
+- Add session details to GET requests to pretend sending request as a web browser (bot will eventually get blocked otherwise)
+- Adding scheduler to automatically scrap data once every day
+- Add connection errors handling
