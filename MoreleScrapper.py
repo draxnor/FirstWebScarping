@@ -1,10 +1,8 @@
-import sys
 import requests
 from bs4 import BeautifulSoup
 import logging
 from GPUScrapperDataclasses import Shop, GraphicCardOffer
 from datetime import datetime
-from math import isnan
 import re
 
 
@@ -26,15 +24,13 @@ class MoreleScraper:
         all_product_urls = []
 
         is_last_page = False
-        counter = 0 #todo
         while not is_last_page:
             current_category_page_url = ''.join((self.shop.shop_base_url, current_category_page_relative_url))
             logging.info(f'Scraping category page: {current_category_page_url}')
             products_urls, next_category_page_relative_url = self._scrap_category_page(current_category_page_url)
             current_category_page_relative_url = next_category_page_relative_url
             all_product_urls += products_urls
-            counter += 1
-            if current_category_page_relative_url is None or counter > 0:
+            if current_category_page_relative_url is None:
                 is_last_page = True
                 logging.info(f'Finished scrapping category pages for product urls '
                              f'from {self.shop.shop_name} online shop!')
