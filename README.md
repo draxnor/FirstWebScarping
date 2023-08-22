@@ -8,7 +8,7 @@ Project written in Python. Scrapping using BeautifulSoup package.
 ## MySQL database
 Database was prepared with project development in mind, where there will be multiple scrappers for multiple online shops.
 
-Using mysql-connector as a MySQL driver.
+Mysql-connector is used as a MySQL driver for Python.
 
 
 ### Database diagram
